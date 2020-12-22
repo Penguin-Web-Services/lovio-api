@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { PrismaService } from './prisma.service';
 import { TypeGraphQLModule } from 'typegraphql-nestjs';
 import { UserResolver } from './user.resolver';
+import { authChecker } from './auth.checker';
 
 @Module({
   imports: [
@@ -12,6 +13,8 @@ import { UserResolver } from './user.resolver';
       emitSchemaFile: true,
       validate: false,
       dateScalarMode: 'timestamp',
+      context: ({ req }) => ({ headers: req.headers }),
+      authChecker,
     }),
   ],
   controllers: [AppController],

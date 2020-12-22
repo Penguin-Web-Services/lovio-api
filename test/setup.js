@@ -5,11 +5,10 @@ module.exports = async () => {
   const keys = Object.keys(prisma);
 
   for (const modelName of keys) {
-    console.log(modelName);
     if (!prisma[modelName].deleteMany) continue;
-    console.log('deleting');
+    console.log('deleting', modelName);
     await prisma[modelName].deleteMany();
-    console.log('deleted');
+    console.log('deleted', modelName);
   }
 
   console.log('all deleted');

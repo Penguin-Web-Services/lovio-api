@@ -52,5 +52,37 @@ describe('AppController (e2e)', () => {
         })
         .expect(200);
     });
+
+    it('user can login with graphql', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          variables: {},
+          query: `mutation{ login(email: "test@test.com", pw: "asdfasdf")}`,
+        })
+        .expect(200);
+
+      const token = res.body.data.login;
+
+      const me = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer ' + token })
+        .send({
+          variables: {},
+          query: `query{ me { email } }`,
+        })
+        .expect(200)
+        .expect((res) => res.body.data.me.email === 'test@test.com');
+
+      const bad = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer b' + token })
+        .send({
+          variables: {},
+          query: `query{ me { email } }`,
+        })
+        .expect(200)
+        .expect((res) => res.body.errors.length > 0);
+    });
   });
 });

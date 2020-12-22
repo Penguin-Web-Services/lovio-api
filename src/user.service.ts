@@ -1,13 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import {
-  UserUpdateInput,
-  User,
-  UserCreateInput,
-  UserWhereUniqueInput,
-  UserWhereInput,
-  UserOrderByInput,
-} from '@prisma/client';
+import { User, UserCreateInput } from '@prisma/client';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UserService {
@@ -28,7 +22,7 @@ export class UserService {
 
     if (user.pw !== pw) throw new Error('Invalid Auth');
 
-    return user;
+    return this.createJWT(user);
   }
 
   async user(id): Promise<User> {
@@ -39,5 +33,16 @@ export class UserService {
     });
 
     return user;
+  }
+
+  createJWT({ id, email, name }: User) {
+    return jwt.sign(
+      {
+        id,
+        email,
+        name,
+      },
+      process.env.JWT_SECRET,
+    );
   }
 }
