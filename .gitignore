@@ -104,4 +104,6 @@ dist
 .tern-port
 
 # idea
-.idea
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/tasks.xml
