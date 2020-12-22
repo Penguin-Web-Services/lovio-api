@@ -42,5 +42,15 @@ describe('AppController (e2e)', () => {
         })
         .expect(200);
     });
+
+    it('user query', () => {
+      return request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          variables: {},
+          query: '{user(id: 1){email}}',
+        })
+        .expect(200);
+    });
   });
 });
