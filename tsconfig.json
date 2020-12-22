@@ -1,19 +1,19 @@
-{{
+{
   "name": "lovio-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
 
   "repository": {
-  "type": "git",
-  "url": "git+https://github.com/Penguin-Web-Services/lovio-api.git"
-},
-"author": "",
-"license": "ISC",
-"bugs": {
-"url": "https://github.com/Penguin-Web-Services/lovio-api/issues"
-},
-"homepage": "https://github.com/Penguin-Web-Services/lovio-api#readme"
+    "type": "git",
+    "url": "git+https://github.com/Penguin-Web-Services/lovio-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Penguin-Web-Services/lovio-api/issues"
+  },
+  "homepage": "https://github.com/Penguin-Web-Services/lovio-api#readme",
 
   "scripts": {
     "prebuild": "rimraf dist",
@@ -78,8 +78,7 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
-}
+  },
 
   "compilerOptions": {
     "module": "commonjs",

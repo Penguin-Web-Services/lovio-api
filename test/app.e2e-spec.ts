@@ -21,4 +21,26 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+
+  describe('registration and login', () => {
+    it('/register', async () => {
+      return request(app.getHttpServer())
+        .post('/register')
+        .send({
+          email: 'test@test.com',
+          pw: 'asdfasdf',
+        })
+        .expect(201);
+    });
+
+    it('/login', async () => {
+      return request(app.getHttpServer())
+        .post('/login')
+        .send({
+          email: 'test@test.com',
+          pw: 'asdfasdf',
+        })
+        .expect(200);
+    });
+  });
 });
