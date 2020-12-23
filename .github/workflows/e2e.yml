@@ -16,7 +16,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD:asdfasdf
+          POSTGRES_PASSWORD: asdfasdf
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -29,4 +29,4 @@ jobs:
       - name: Run End to End Tests
         run: npm run test:e2e
         env:
-          DATABASE_URL:"postgresql://postgres:asdfasdf@postgres:5432/test?schema=public"
+          DATABASE_URL: postgresql://postgres:asdfasdf@postgres:5432/test?schema=public
