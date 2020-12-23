@@ -27,7 +27,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "pretest:e2e": "dotenv -e test.env -- prisma migrate dev --preview-feature",
+    "pretest:e2e": "dotenv -e test/test.env -- prisma migrate dev --preview-feature",
     "test:e2e": "dotenv -e test/test.env -- jest --config ./test/jest-e2e.json",
     "test:watch:docker": "npm i && npm run test:watch",
     "test:e2e:docker": "npm i && prisma generate && npm run test:e2e"
