@@ -30,7 +30,7 @@
     "pretest:e2e": "dotenv -e test/test.env -- prisma migrate dev --preview-feature",
     "test:e2e": "dotenv -e test/test.env -- jest --config ./test/jest-e2e.json",
     "pretest:e2e:coverage": "dotenv -e test/test.env -- prisma migrate dev --preview-feature",
-    "test:e2e:coverage": "dotenv -e test/test.env -- jest --config ./test/jest-e2e.json --detectOpenHandles --forceExit",
+    "test:e2e:coverage": "dotenv -e test/test.env -- jest --config ./test/jest-e2e.json --detectOpenHandles --forceExit --coverage",
     "test:watch:docker": "npm i && npm run test:watch",
     "test:e2e:docker": "npm i && prisma generate && npm run test:e2e"
   },

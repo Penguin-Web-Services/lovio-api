@@ -34,8 +34,10 @@ jobs:
           DATABASE_URL: postgresql://postgres:asdfasdf@localhost:5432/postgres?schema=public
           POSTGRES_PASSWORD: asdfasdf
           JWT_SECRET: test
+      - name: Current Dir
+        run: pwd
       - name: Upload codecov
-        run: bash <(curl -s https://codecov.io/bash) -s test/coverage
+        run: bash <(curl -s https://codecov.io/bash)
         env:
           CODECOV_TOKEN: ${{env.CODECOV_TOKEN}}
 
