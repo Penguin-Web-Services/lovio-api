@@ -29,4 +29,8 @@ jobs:
       - name: Install Dependencies
         run: npm i
       - name: Run End to End Tests
-        run: npm run test:e2e
+        run: npm run test:e2e:coverage
+      - name: Upload codecov
+        run: bash <(curl -s https://codecov.io/bash)
+
+
