@@ -31,9 +31,9 @@ jobs:
       - name: Run End to End Tests
         run: npm run test:e2e:coverage
         env:
-          - DATABASE_URL:postgresql://postgres:asdfasdf@localhost:5432/postgres?schema=public
-          - POSTGRES_PASSWORD:asdfasdf
-          - JWT_SECRET:test
+          DATABASE_URL:postgresql://postgres:asdfasdf@localhost:5432/postgres?schema=public
+          POSTGRES_PASSWORD:asdfasdf
+          JWT_SECRET:test
       - name: Upload codecov
         run: bash <(curl -s https://codecov.io/bash)
 
