@@ -1,4 +1,27 @@
 services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      target: dev
+      context: .
+    volumes:
+      - ./app:/workspace/app
+      - node_modules:/workspace/app/node_modules
+    command: npm run start:docker
+    environment:
+      - DATABASE_URL=postgresql://postgres:asdfasdf@db:5432/postgres?schema=public
+
+  apiunit:
+    build:
+      dockerfile: Dockerfile
+      target: dev
+      context: .
+    volumes:
+      - ./app:/workspace/app
+      - ./.git:/workspace/.git
+      - node_modules:/workspace/app/node_modules
+    command: npm run test:docker
+
   db:
     image: library/postgres:13.1-alpine
     ports:
@@ -14,5 +37,7 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+
 volumes:
   db:
+  node_modules:
