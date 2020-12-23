@@ -1,6 +1,6 @@
 FROM node:fermium as dev
 WORKDIR /workspace/app
-RUN mkdir app
+RUN mkdir -p /workspace/app
 
 FROM node:fermium-alpine as node
 WORKDIR /app

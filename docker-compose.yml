@@ -5,7 +5,7 @@ services:
       target: dev
       context: .
     volumes:
-      - ./app:/workspace/app
+      - ./:/workspace/
       - node_modules:/workspace/app/node_modules
     command: npm run start:docker
     environment:
@@ -17,10 +17,22 @@ services:
       target: dev
       context: .
     volumes:
-      - ./app:/workspace/app
+      - ./:/workspace/
+      - node_modules:/workspace/app/node_modules
+    command: npm run test:watch:docker
+
+  apie2e:
+    build:
+      dockerfile: Dockerfile
+      target: dev
+      context: .
+    volumes:
+      - ./:/workspace/
       - ./.git:/workspace/.git
       - node_modules:/workspace/app/node_modules
-    command: npm run test:docker
+    command: npm run test:e2e:docker
+    environment:
+      - DATABASE_URL=postgresql://postgres:asdfasdf@db:5432/test?schema=public
 
   db:
     image: library/postgres:13.1-alpine
