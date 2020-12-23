@@ -21,3 +21,4 @@ import { authChecker } from './auth.checker';
   providers: [AppService, UserService, PrismaService, UserResolver],
 })
 export class AppModule {}
+

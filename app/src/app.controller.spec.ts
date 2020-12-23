@@ -12,6 +12,8 @@ describe('AppController', () => {
     }).compile();
 
     appController = app.get<AppController>(AppController);
+
+    return appController
   });
 
   describe('root', () => {

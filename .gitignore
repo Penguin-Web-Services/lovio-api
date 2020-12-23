@@ -107,3 +107,4 @@ dist
 .idea/workspace.xml
 .idea/usage.statistics.xml
 .idea/tasks.xml
+/app/schema.gql
