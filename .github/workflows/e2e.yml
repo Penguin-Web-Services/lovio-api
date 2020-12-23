@@ -1,0 +1,6 @@
+name: End to End tests
+
+on:
+  pull_request:
+    branches:
+      - master
