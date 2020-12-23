@@ -35,6 +35,8 @@ jobs:
           POSTGRES_PASSWORD: asdfasdf
           JWT_SECRET: test
       - name: Upload codecov
-        run: bash <(curl -s https://codecov.io/bash)
+        run: bash <(curl -s https://codecov.io/bash) -s test/coverage
+        env:
+          CODECOV_TOKEN: ${{env.CODECOV_TOKEN}}
 
 
