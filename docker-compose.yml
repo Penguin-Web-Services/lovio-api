@@ -10,6 +10,8 @@ services:
     command: npm run start:docker
     environment:
       - DATABASE_URL=postgresql://postgres:asdfasdf@db:5432/postgres?schema=public
+    depends_on:
+     - db
 
   apiunit:
     build:
@@ -20,6 +22,8 @@ services:
       - ./:/workspace/
       - node_modules:/workspace/app/node_modules
     command: npm run test:watch:docker
+    depends_on:
+      - db
 
   apie2e:
     build:
@@ -33,15 +37,18 @@ services:
     command: npm run test:e2e:docker
     environment:
       - DATABASE_URL=postgresql://postgres:asdfasdf@db:5432/test?schema=public
+    depends_on:
+      - db
 
   db:
     image: library/postgres:13.1-alpine
     ports:
-    - 5432:5432
+      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - db:/var/lib/postgresql/data
+
   proxy:
     image: jwilder/nginx-proxy:alpine
     ports:

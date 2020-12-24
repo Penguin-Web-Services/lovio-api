@@ -1,0 +1,44 @@
+name: End to End tests
+
+on:
+  pull_request:
+    branches:
+      - master
+
+defaults:
+  run:
+    working-directory: app
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: asdfasdf
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm i
+      - name: Run End to End Tests
+        run: npm run test:e2e:coverage
+        env:
+          DATABASE_URL: postgresql://postgres:asdfasdf@localhost:5432/postgres?schema=public
+          POSTGRES_PASSWORD: asdfasdf
+          JWT_SECRET: test
+      - name: Current Dir
+        run: pwd
+      - name: Upload codecov
+        run: bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{env.CODECOV_TOKEN}}
+
+
