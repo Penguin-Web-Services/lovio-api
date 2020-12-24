@@ -29,6 +29,12 @@ jobs:
           registry: docker.pkg.github.com
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: testing
+        run: echo ${{ github.repository_owner }}
+      - name: testing tags
+        run: echo ${{ steps.docker_meta.outputs.tags }}
+      - name: testing tags
+        run: echo ${{ steps.docker_meta.outputs.labels }}
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
