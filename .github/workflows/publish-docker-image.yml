@@ -26,10 +26,9 @@ jobs:
           repository: penguin-web-services/lovio-api/api
           tag_with_ref: true
       - name: Push to Docker Hub
-          uses: docker/build-push-action@v1
-          with:
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-            registry: docker.pkg.github.com
-            repository: penguin-web-services/lovio-api/api
-            tag_with_ref: true
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.HUB_USER }}
+          password: ${{ secrets.HUB_PASS }}
+          repository: penguinws/lovio-api
+          tag_with_ref: true
