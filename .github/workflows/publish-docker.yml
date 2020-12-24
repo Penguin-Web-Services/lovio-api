@@ -33,7 +33,7 @@ jobs:
         run: echo ${{ github.repository_owner }}
       - name: testing tags
         run: echo ${{ steps.docker_meta.outputs.tags }}
-      - name: testing tags
+      - name: testing tagsx
         run: echo ${{ steps.docker_meta.outputs.labels }}
 
       - name: Push to GitHub Packages
