@@ -23,6 +23,8 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
+          context: .
+          file: ./Dockerfile
           target: production
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
