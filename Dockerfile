@@ -27,5 +27,4 @@ WORKDIR /app
 COPY --from=build_image /app/dist /app/dist
 COPY --from=prod_deps /app/node_modules /app/node_modules
 COPY ./app/package.json /app/
-RUN ls node_modules/
 CMD npm run start:prod
