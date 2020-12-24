@@ -1,0 +1,22 @@
+name: Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_dockerfile:
+    name: run docker build for Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: my-org/my-repo/my-image
+          tag_with_ref: true
