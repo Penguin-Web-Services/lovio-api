@@ -19,7 +19,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: penguin-web-services/lovio-api
+          images: penguin-web-services/lovio-api/api
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Push to GitHub Packages
