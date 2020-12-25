@@ -7,7 +7,7 @@ jobs:
     - name: 'Checkout Github Action' 
       uses: actions/checkout@master
     
-    - name: 'Login via Azure CLI'
+    - name: 'Login via Azure CLIx'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
