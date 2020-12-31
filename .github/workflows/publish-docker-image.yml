@@ -32,6 +32,7 @@ jobs:
           script: |
             cd services/lovio-api
             git pull
+            docker-compose -f docker-compose.prod.yml pull
             docker-compose -f docker-compose.prod.yml up -d
           host: ${{ secrets.HOST }}
           username: ${{ secrets.username }}
