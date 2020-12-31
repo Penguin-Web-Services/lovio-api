@@ -22,3 +22,17 @@ jobs:
           registry: docker.pkg.github.com
           repository: penguin-web-services/lovio-api/api
           tag_with_ref: true
+  deploy:
+    needs: build_dockerfile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remote SSH Commands
+        uses: appleboy/ssh-action@master
+        with:
+          script: |
+            cd services/lovio-api
+            git pull
+            docker-compose -f docker-compose.prod.yml up -d
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.username }}
+          key: ${{ secrets.PRIVATE_KEY }}
