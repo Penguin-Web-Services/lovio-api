@@ -13,9 +13,16 @@ type Query {
   user(id: Float!): User!
 }
 
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
 type User {
+  createdAt: Timestamp!
   email: String!
   id: Int!
   name: String
   pw: String!
+  updatedAt: Timestamp!
 }
