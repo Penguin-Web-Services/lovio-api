@@ -25,6 +25,7 @@ COPY --from=build_image /app/node_modules/@generated /app/node_modules/@generate
 FROM node:fermium-alpine as production
 WORKDIR /app
 COPY --from=build_image /app/dist /app/dist
+COPY --from=build_image /app/prisma /app/prisma
 COPY --from=prod_deps /app/node_modules /app/node_modules
 COPY ./app/package.json /app/
 CMD npm run start:prod
