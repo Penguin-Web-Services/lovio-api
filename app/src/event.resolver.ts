@@ -1,11 +1,5 @@
 import { Injectable, Scope, UseGuards } from '@nestjs/common';
-import {
-  Resolver,
-  Mutation,
-  Arg,
-  Authorized,
-  Ctx,
-} from 'type-graphql';
+import { Resolver, Mutation, Arg, Authorized, Ctx } from 'type-graphql';
 
 import { Event } from '@generated/type-graphql/models';
 import { EventService } from './event.service';
