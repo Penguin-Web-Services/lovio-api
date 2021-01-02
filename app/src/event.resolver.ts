@@ -3,8 +3,8 @@ import { Resolver, Mutation, Arg, Authorized, Ctx } from 'type-graphql';
 
 import { Event } from '@generated/type-graphql/models';
 import { EventService } from './event.service';
-import { AuthGuard } from './auth.guard';
 import { MyContext } from './auth.checker';
+
 import { CreateEventDto } from './event.dto';
 
 @Injectable({ scope: Scope.REQUEST })
@@ -13,7 +13,6 @@ export class EventResolver {
   constructor(private readonly eventService: EventService) {}
 
   @Mutation(() => Event)
-  @UseGuards(new AuthGuard())
   @Authorized()
   createEvent(
     @Ctx() context: MyContext,
@@ -23,7 +22,6 @@ export class EventResolver {
   }
 
   @Mutation(() => Event)
-  @UseGuards(new AuthGuard())
   @Authorized()
   async joinEvent(
     @Ctx() context: MyContext,

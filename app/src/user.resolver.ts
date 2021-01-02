@@ -15,7 +15,6 @@ import { Context } from '@nestjs/graphql';
 
 import { User } from '@generated/type-graphql/models';
 import { UserService } from './user.service';
-import { AuthGuard } from './auth.guard';
 import { MyContext } from './auth.checker';
 
 @Injectable({ scope: Scope.REQUEST })
@@ -24,7 +23,6 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => User)
-  @UseGuards(new AuthGuard())
   @Authorized()
   me(@Ctx() context: MyContext): Promise<User> {
     return this.userService.user(context.user.id);
