@@ -12,6 +12,8 @@ services:
       - DATABASE_URL=postgresql://postgres:asdfasdf@db:5432/postgres?schema=public
     depends_on:
      - db
+    ports:
+      - 3000:3000
 
   apiunit:
     build:

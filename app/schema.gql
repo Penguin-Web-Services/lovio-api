@@ -3,7 +3,35 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateEventDto {
+  active: Boolean!
+  endAt: Timestamp
+  name: String!
+  startAt: Timestamp
+  type: String!
+}
+
+type Event {
+  active: Boolean!
+  createdAt: Timestamp!
+  endAt: Timestamp!
+  id: Int!
+  name: String!
+  startAt: Timestamp!
+  type: EventType!
+  updatedAt: Timestamp!
+  userId: Int!
+}
+
+enum EventType {
+  InviteOnly
+  Private
+  Public
+}
+
 type Mutation {
+  createEvent(data: CreateEventDto!): Event!
+  joinEvent(eventId: Float!): Event!
   login(email: String!, pw: String!): String!
   test(data: String!): String!
 }

@@ -6,6 +6,8 @@ import { PrismaService } from './prisma.service';
 import { TypeGraphQLModule } from 'typegraphql-nestjs';
 import { UserResolver } from './user.resolver';
 import { authChecker } from './auth.checker';
+import { EventResolver } from './event.resolver';
+import { EventService } from './event.service';
 
 @Module({
   imports: [
@@ -18,7 +20,13 @@ import { authChecker } from './auth.checker';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, UserService, PrismaService, UserResolver],
+  providers: [
+    AppService,
+    UserService,
+    PrismaService,
+    UserResolver,
+    EventResolver,
+    EventService,
+  ],
 })
 export class AppModule {}
-

@@ -51,6 +51,9 @@ model Event {
   active    Boolean
   startAt   DateTime
   endAt     DateTime
+
+  createdBy User
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
