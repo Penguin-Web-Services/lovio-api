@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { CreateEventDto } from './event.dto';
+import { AddEventAssetDto, CreateEventDto } from './event.dto';
 
 @Injectable()
 export class EventService {
@@ -46,5 +46,38 @@ export class EventService {
         active: true,
       },
     });
+  }
+
+  async eventsByUserId({ userId }: { userId: number }) {
+    const events = await this.prisma.event.findMany({
+      where: {
+        createdBy: {
+          id: userId,
+        },
+      },
+    });
+
+    return events;
+  }
+
+  async addAsset(userId, { eventId, type, url }: AddEventAssetDto) {
+    const asset = await this.prisma.asset.create({
+      data: {
+        type,
+        url,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        event: {
+          connect: {
+            id: eventId,
+          },
+        },
+      },
+    });
+
+    return asset;
   }
 }

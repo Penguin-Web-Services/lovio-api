@@ -6,6 +6,12 @@ import * as faker from 'faker';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let email = faker.internet.email();
+  let email2 = faker.internet.email();
+  let user2;
+  let token;
+  let token2;
+  let event;
 
   afterAll(() => {
     app.close();
@@ -28,12 +34,6 @@ describe('AppController (e2e)', () => {
   });
 
   describe('registration and login', () => {
-    let email = faker.internet.email();
-    let email2 = faker.internet.email();
-    let token;
-    let token2;
-    let event;
-
     it('/register', async () => {
       return request(app.getHttpServer())
         .post('/register')
@@ -105,8 +105,22 @@ describe('AppController (e2e)', () => {
         .expect((res) => !res.body.errors);
 
       token2 = res.body.data.login;
-    });
 
+      const resme = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer ' + token2 })
+        .send({
+          variables: {},
+          query: `query{ me { id, email } }`,
+        })
+        .expect(200)
+        .expect((res) => !res.body.errors);
+
+      user2 = resme.body.data.me;
+    });
+  });
+
+  describe('event', () => {
     it('user can create an event', async () => {
       const res = await request(app.getHttpServer())
         .post('/graphql')
@@ -126,7 +140,7 @@ describe('AppController (e2e)', () => {
     it('another user can join an event', async () => {
       const res = await request(app.getHttpServer())
         .post('/graphql')
-        .set({ authorization: 'Bearer ' + token })
+        .set({ authorization: 'Bearer ' + token2 })
         .send({
           variables: {},
           query: `mutation{ joinEvent(eventId: ${event.id}) {
@@ -136,5 +150,38 @@ describe('AppController (e2e)', () => {
         .expect(200)
         .expect((res) => !res.body.errors);
     });
+
+    it('user can see all their events', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer ' + token2 })
+        .send({
+          variables: {},
+          query: `query{ eventsByCurrentUser {
+    name,
+    userId
+  } }`,
+        })
+        .expect(200)
+        .expect((res) =>
+          res.body.data.eventsByCurrentUser.every((e) => e.userId === user2.id),
+        );
+    });
+
+    it('user can send an event asset', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer ' + token2 })
+        .send({
+          variables: {},
+          query: `mutation{ eventAddAsset(data: { eventId: ${event.id}, type: "Photo", url: "https://avatars1.githubusercontent.com/u/1021110?s=60&v=4" }) {
+    id, userId, eventId
+  } }`,
+        })
+        .expect(200)
+        .expect((res) => res.body.data.eventAddAsset.userId === user2.id);
+    });
+
+    it('get events with all assets', async () => {});
   });
 });

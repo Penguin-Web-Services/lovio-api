@@ -3,6 +3,28 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input AddEventAssetDto {
+  eventId: Float!
+  type: String!
+  url: String!
+}
+
+type Asset {
+  createdAt: Timestamp!
+  eventId: Int!
+  id: Int!
+  meta: JSON
+  type: AssetType!
+  updatedAt: Timestamp!
+  url: String!
+  userId: Int!
+}
+
+enum AssetType {
+  Photo
+  Video
+}
+
 input CreateEventDto {
   active: Boolean!
   endAt: Timestamp
@@ -29,14 +51,21 @@ enum EventType {
   Public
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
 type Mutation {
   createEvent(data: CreateEventDto!): Event!
+  eventAddAsset(data: AddEventAssetDto!): Asset!
   joinEvent(eventId: Float!): Event!
   login(email: String!, pw: String!): String!
   test(data: String!): String!
 }
 
 type Query {
+  eventsByCurrentUser: [Event!]!
   me: User!
   user(id: Float!): User!
 }
