@@ -96,13 +96,36 @@ export class EventService {
     });
   }
 
-  async setActiveEvent(userId: number, { eventId }) {
+  async setActiveEvent({ eventId }) {
     return this.prisma.event.update({
       where: {
         id: eventId,
       },
       data: {
         active: true,
+      },
+    });
+  }
+
+  async setActiveUserEvent(userId: number, eventId: number) {
+    await this.prisma.eventOnUser.updateMany({
+      where: {
+        userId,
+      },
+      data: {
+        active: false,
+      },
+    });
+
+    return await this.prisma.eventOnUser.update({
+      where: {
+        userId_eventId: {
+          userId,
+          eventId,
+        },
+      },
+      data: {
+        active: false,
       },
     });
   }

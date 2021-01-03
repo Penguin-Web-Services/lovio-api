@@ -217,5 +217,21 @@ describe('AppController (e2e)', () => {
           return res.body.data.setActiveEvent.active;
         });
     });
+
+    it('can change active user event', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer ' + token2 })
+        .send({
+          variables: {},
+          query: `mutation{ setActiveUserEvent(eventId: ${event.id}) {
+          active
+        } }`,
+        })
+        .expect(200)
+        .expect((res) => {
+          return res.body.data.setActiveUserEvent.active;
+        });
+    });
   });
 });

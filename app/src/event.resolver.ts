@@ -10,7 +10,7 @@ import {
   Root,
 } from 'type-graphql';
 
-import { Event, Asset } from '@generated/type-graphql/models';
+import { Event, EventOnUser, Asset } from '@generated/type-graphql/models';
 import { EventService } from './event.service';
 import { MyContext } from './auth.checker';
 
@@ -72,10 +72,16 @@ export class EventResolver {
 
   @Mutation(() => Event)
   @Authorized()
-  async setActiveEvent(
+  async setActiveEvent(@Arg('eventId') eventId: number) {
+    return this.eventService.setActiveEvent({ eventId });
+  }
+
+  @Mutation(() => EventOnUser)
+  @Authorized()
+  async setActiveUserEvent(
     @Ctx() { user }: MyContext,
     @Arg('eventId') eventId: number,
   ) {
-    return this.eventService.setActiveEvent(user.id, { eventId });
+    return this.eventService.setActiveUserEvent(user.id, eventId);
   }
 }

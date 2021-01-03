@@ -46,6 +46,14 @@ type Event {
   userId: Int!
 }
 
+type EventOnUser {
+  active: Boolean!
+  createdAt: Timestamp!
+  eventId: Int!
+  updatedAt: Timestamp!
+  userId: Int!
+}
+
 enum EventType {
   InviteOnly
   Private
@@ -63,6 +71,7 @@ type Mutation {
   joinEvent(eventId: Float!): Event!
   login(email: String!, pw: String!): String!
   setActiveEvent(eventId: Float!): Event!
+  setActiveUserEvent(eventId: Float!): EventOnUser!
   test(data: String!): String!
 }
 
