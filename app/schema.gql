@@ -62,6 +62,7 @@ type Mutation {
   eventAddAsset(data: AddEventAssetDto!): Asset!
   joinEvent(eventId: Float!): Event!
   login(email: String!, pw: String!): String!
+  setActiveEvent(eventId: Float!): Event!
   test(data: String!): String!
 }
 

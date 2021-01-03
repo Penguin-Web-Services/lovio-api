@@ -69,4 +69,13 @@ export class EventResolver {
   assets(@Root() event: Event) {
     return this.eventService.eventAssetsByEventId(event.id);
   }
+
+  @Mutation(() => Event)
+  @Authorized()
+  async setActiveEvent(
+    @Ctx() { user }: MyContext,
+    @Arg('eventId') eventId: number,
+  ) {
+    return this.eventService.setActiveEvent(user.id, { eventId });
+  }
 }

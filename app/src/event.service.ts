@@ -60,7 +60,7 @@ export class EventService {
     return events;
   }
 
-  async addAsset(userId, { eventId, type, url }: AddEventAssetDto) {
+  async addAsset(userId: number, { eventId, type, url }: AddEventAssetDto) {
     const asset = await this.prisma.asset.create({
       data: {
         type,
@@ -92,6 +92,17 @@ export class EventService {
     return this.prisma.asset.findMany({
       where: {
         eventId,
+      },
+    });
+  }
+
+  async setActiveEvent(userId: number, { eventId }) {
+    return this.prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        active: true,
       },
     });
   }
