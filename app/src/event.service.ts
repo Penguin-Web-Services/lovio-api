@@ -125,7 +125,7 @@ export class EventService {
         },
       },
       data: {
-        active: false,
+        active: true,
       },
     });
   }
