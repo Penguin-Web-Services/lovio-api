@@ -182,6 +182,24 @@ describe('AppController (e2e)', () => {
         .expect((res) => res.body.data.eventAddAsset.userId === user2.id);
     });
 
-    it('get events with all assets', async () => {});
+    it('get events with all assets', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/graphql')
+        .set({ authorization: 'Bearer ' + token2 })
+        .send({
+          variables: {},
+          query: `query{ event(eventId: ${event.id}) {
+          id,
+          assets {
+            id, eventId, userId, url
+          }
+        } }`,
+        })
+        .expect(200)
+        .expect((res) => res.body.data.event.id === event.id)
+        .expect((res) => {
+          return res.body.data.event.assets.every((a) => a.url);
+        });
+    });
   });
 });

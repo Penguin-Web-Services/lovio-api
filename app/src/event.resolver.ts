@@ -1,5 +1,14 @@
 import { Injectable, Scope, UseGuards } from '@nestjs/common';
-import { Resolver, Mutation, Arg, Authorized, Ctx, Query } from 'type-graphql';
+import {
+  Resolver,
+  Mutation,
+  Arg,
+  Authorized,
+  Ctx,
+  Query,
+  FieldResolver,
+  Root,
+} from 'type-graphql';
 
 import { Event, Asset } from '@generated/type-graphql/models';
 import { EventService } from './event.service';
@@ -48,5 +57,16 @@ export class EventResolver {
     @Arg('data') data: AddEventAssetDto,
   ) {
     return this.eventService.addAsset(user.id, data);
+  }
+
+  @Query(() => Event)
+  @Authorized()
+  event(@Arg('eventId') eventId: number) {
+    return this.eventService.eventById(eventId);
+  }
+
+  @FieldResolver(() => [Asset])
+  assets(@Root() event: Event) {
+    return this.eventService.eventAssetsByEventId(event.id);
   }
 }

@@ -80,4 +80,19 @@ export class EventService {
 
     return asset;
   }
+  async eventById(eventId: number) {
+    return this.prisma.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+  }
+
+  async eventAssetsByEventId(eventId: number) {
+    return this.prisma.asset.findMany({
+      where: {
+        eventId,
+      },
+    });
+  }
 }
