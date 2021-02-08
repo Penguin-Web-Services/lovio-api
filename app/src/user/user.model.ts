@@ -1,5 +1,4 @@
 import { InputType, Field, ObjectType } from '@nestjs/graphql';
-import { IsOptional } from 'class-validator';
 
 @ObjectType()
 export class User {
