@@ -2,21 +2,18 @@ import { Injectable, Scope, UseGuards } from '@nestjs/common';
 
 import { Args, Context, Resolver, Query, Mutation } from '@nestjs/graphql';
 
-//import { User } from '@generated/type-graphql/models';
 import { UserService } from './user.service';
-//import { MyContext } from './auth.checker';
-import { IMutation, IQuery, User } from '../graphql.schema';
 import { AuthUser } from '../lib/auth.checker';
+import { LoginInput, RegisterInput, User } from './user.model';
 
-@Injectable({ scope: Scope.REQUEST })
 @Resolver((of) => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {
     //super();
   }
 
-  @Query()
-  me(@AuthUser() user): Promise<IQuery['me']> {
+  @Query((returns) => User)
+  me(@AuthUser() user) {
     return this.userService.user(user.id);
   }
 
@@ -26,12 +23,12 @@ export class UserResolver {
   }
 
   @Mutation(() => String)
-  login(@Args('data') data) {
+  login(@Args('data') data: LoginInput) {
     return this.userService.login(data);
   }
 
-  @Mutation()
-  register(@Args('data') data) {
+  @Mutation((returns) => User)
+  register(@Args('data') data: RegisterInput) {
     return this.userService.register(data);
   }
 }

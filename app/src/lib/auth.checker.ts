@@ -35,7 +35,6 @@ async function validateToken(auth: string): Promise<AuthTokenUser> {
   }
 
   try {
-    console.log(bearerToken);
     return await jwt.verify(bearerToken, process.env.JWT_SECRET);
   } catch (err) {
     throw new HttpException('Invalid Token', HttpStatus.UNAUTHORIZED);

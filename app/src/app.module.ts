@@ -8,13 +8,9 @@ import { join } from 'path';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      typePaths: ['./**/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'),
-        emitTypenameField: true,
-        outputAs: 'class',
-      },
+      autoSchemaFile: join(process.cwd(), 'schema.gql'),
       context: ({ req }) => ({ headers: req.headers }),
+      sortSchema: true,
     }),
   ],
   providers: [UserService, PrismaService, UserResolver],
