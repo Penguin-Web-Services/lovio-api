@@ -1,0 +1,35 @@
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type User {
+    createdAt: Timestamp!
+    email: String!
+    id: Int!
+    name: String
+    pw: String!
+    updatedAt: Timestamp!
+}
+
+input RegisterInput {
+    email: String!
+    pw: String!
+}
+
+input LoginInput {
+    email: String!
+    pw: String!
+}
+
+
+type Query {
+    me: User!
+    user(id: Float!): User!
+}
+
+type Mutation {
+    register(data: RegisterInput): User!
+    login(data: LoginInput): String!
+}
+

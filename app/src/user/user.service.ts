@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { User, UserCreateInput } from '@prisma/client';
 import * as jwt from 'jsonwebtoken';
 
@@ -11,7 +11,7 @@ export class UserService {
     return this.prisma.user.create({ data });
   }
 
-  async login({ email, pw }: { email: string; pw: string }): Promise<User> {
+  async login({ email, pw }: { email: string; pw: string }): Promise<string> {
     const user = await this.prisma.user.findUnique({
       where: {
         email,
@@ -35,7 +35,7 @@ export class UserService {
     return user;
   }
 
-  createJWT({ id, email, name }: User) {
+  createJWT({ id, email, name }: User): string {
     return jwt.sign(
       {
         id,

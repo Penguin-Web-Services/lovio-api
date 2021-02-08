@@ -1,32 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserService } from './user.service';
-import { PrismaService } from './prisma.service';
-import { TypeGraphQLModule } from 'typegraphql-nestjs';
-import { UserResolver } from './user.resolver';
-import { authChecker } from './auth.checker';
-import { EventResolver } from './event.resolver';
-import { EventService } from './event.service';
+import { UserService } from './user/user.service';
+import { PrismaService } from './prisma/prisma.service';
+import { UserResolver } from './user/user.resolver';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 @Module({
   imports: [
-    TypeGraphQLModule.forRoot({
-      emitSchemaFile: true,
-      validate: false,
-      dateScalarMode: 'timestamp',
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.ts'),
+        emitTypenameField: true,
+        outputAs: 'class',
+      },
       context: ({ req }) => ({ headers: req.headers }),
-      authChecker,
     }),
   ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    UserService,
-    PrismaService,
-    UserResolver,
-    EventResolver,
-    EventService,
-  ],
+  providers: [UserService, PrismaService, UserResolver],
 })
 export class AppModule {}
